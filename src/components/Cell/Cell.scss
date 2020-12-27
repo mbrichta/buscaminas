@@ -2,6 +2,11 @@
 
 .cell {
     @include borders;
+    @include button;
     width: 30px;
     height: 30px;
+
+    &.visible{
+        border: solid 1px #7b7b7b
+    }
 }

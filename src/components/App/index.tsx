@@ -8,14 +8,16 @@ const App: React.FC = () => {
 
     const [cells, setCells] = useState(generateCels());
 
-    const string = "kjsdnkfnksdfkds"
-
-    console.log(string.charAt(0))
-
     const renderCells = (): React.ReactNode => {
         return cells.map(
             (row, rowIndx) => row.map(
-                (cell, cellIndx) => <Cell key={`${rowIndx}-${cellIndx}`} />
+                (cell, cellIndx) => <Cell
+                    key={`${rowIndx}-${cellIndx}`}
+                    state={cell.state}
+                    value={cell.value}
+                    row={rowIndx}
+                    col={cellIndx}
+                />
             )
         )
     }
