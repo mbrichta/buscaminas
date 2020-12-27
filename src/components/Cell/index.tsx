@@ -14,15 +14,26 @@ const Cell: React.FC<CellProps> = ({ state, value, row, col }) => {
     const renderContent = (): React.ReactNode => {
         if (state === CellState.visible) {
 
-            value === CellValue.bomb && <div className="bomb">💣</div>
+            if (value === CellValue.bomb) {
+                return <span className="bomb">💣</span>
+            } else if (value === CellValue.none) {
+                return null;
+            }
+
+            return value;
 
         } else if (state === CellState.flagged) {
-
+            return <span className="flagged">🚩</span>
         } else return null;
     }
 
+    const handleClick = (e: MouseEvent) => {
+        e.preventDefault();
+        console.log(e.target)
+    }
+
     return (
-        <div className={`cell ${state === CellState.visible ? 'visible' : ''}`}>
+        <div className={`cell ${state === CellState.visible ? 'visible' : ''} value-${value}`}>
             {renderContent()}
         </div>
     )
