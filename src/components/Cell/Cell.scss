@@ -14,10 +14,6 @@
         border: solid 1px #7b7b7b
     }
 
-    span{
-        margin-top: 2px;
-    }
-
     &.value-1{
         color: blue;
     }
@@ -42,4 +38,12 @@
     &.value-7{
         color: grey;
     }
+}
+
+.flagged {
+    margin-bottom: 2px;
+}
+
+.bomb{
+    margin-top: 2px;
 }

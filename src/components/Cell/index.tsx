@@ -1,15 +1,19 @@
-import React, { ReactNode } from 'react';
-import { CellState, CellValue } from '../../types';
+import React from 'react';
+import { CellState, CellValue, FaceEmoji } from '../../types';
 import './Cell.scss';
 
 interface CellProps {
     state: CellState,
     value: CellValue,
     row: number,
-    col: number
+    col: number,
+    face: FaceEmoji,
+    setFace: Function,
+    onClick(rowParam: number, colParam: number): (...args: any[]) => void;
+    onRightClick(rowParam: number, colParam: number): (...args: any[]) => void;
 }
 
-const Cell: React.FC<CellProps> = ({ state, value, row, col }) => {
+const Cell: React.FC<CellProps> = ({ state, value, row, col, face, setFace, onClick, onRightClick }) => {
 
     const renderContent = (): React.ReactNode => {
         if (state === CellState.visible) {
@@ -27,13 +31,22 @@ const Cell: React.FC<CellProps> = ({ state, value, row, col }) => {
         } else return null;
     }
 
-    const handleClick = (e: MouseEvent) => {
-        e.preventDefault();
-        console.log(e.target)
+    const handleMouseDown = (): void => {
+        setFace(FaceEmoji.surprised)
+    }
+
+    const handleMouseUp = (): void => {
+        setFace(FaceEmoji.smiling)
     }
 
     return (
-        <div className={`cell ${state === CellState.visible ? 'visible' : ''} value-${value}`}>
+        <div
+            className={`cell ${state === CellState.visible ? 'visible' : ''} value-${value}`}
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
+            onClick={onClick(row, col)}
+            onContextMenu={onRightClick(row, col)}
+        >
             {renderContent()}
         </div>
     )

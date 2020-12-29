@@ -20,3 +20,10 @@ export type CellType = {
     value: CellValue;
     state: CellState
 };
+
+export enum FaceEmoji {
+    smiling = '😊',
+    surprised = '😮',
+    dead = '😵',
+    win = '😎'
+}
