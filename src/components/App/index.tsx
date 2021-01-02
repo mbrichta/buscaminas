@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { generateCels } from '../../utils/index';
+import { generateCels, openMultipleCells } from '../../utils/index';
 import NumberDisplay from '../NumberDisplay';
 import Cell from '../Cell'
 import './App.scss';
-import { CellState, CellType, FaceEmoji } from '../../types';
+import { CellState, CellType, CellValue, FaceEmoji } from '../../types';
 
 const App: React.FC = () => {
 
@@ -31,8 +31,29 @@ const App: React.FC = () => {
 
         //start the game
         if (!gameOn) {
-            setGameOn(true)
-            console.log(gameOn)
+            setGameOn(true);
+        }
+
+        const currentCell = cells[rowParam][colParam];
+        let newCells = cells.slice();
+
+        if (currentCell.state === CellState.flagged || currentCell.state === CellState.visible) {
+            return;
+        }
+
+        if (currentCell.value === CellValue.bomb) {
+            newCells.map((row, rowIndx) => row.map((col, colIndx) => {
+                newCells[rowIndx][colIndx].state = CellState.visible;
+            }))
+            setGameOn(false);
+            setFace(FaceEmoji.dead);
+
+        } else if (currentCell.value === CellValue.none) {
+            newCells = openMultipleCells(newCells, rowParam, colParam);
+            setCells(newCells);
+        } else {
+            newCells[rowParam][colParam].state = CellState.visible;
+            setCells(newCells);
         }
     }
 
@@ -59,6 +80,11 @@ const App: React.FC = () => {
             setGameOn(false);
             setTimer(0);
             setCells(generateCels())
+        } else {
+            setGameOn(true);
+            setTimer(0);
+            setCells(generateCels());
+            setFace(FaceEmoji.smiling);
         }
     }
 
