@@ -1,4 +1,3 @@
-import Cell from '../components/Cell';
 import { MAX_COLUMNS, MAX_ROWS, NUM_OF_BOMBS } from '../constants/index';
 import { CellValue, CellState, CellType } from '../types/index';
 
@@ -112,6 +111,11 @@ export const generateCels = () => {
 
 export const openMultipleCells = (cells: CellType[][], rowParam: number, colParam: number): CellType[][] => {
     const currentCell = cells[rowParam][colParam];
+
+    if (currentCell.state === CellState.visible || currentCell.state === CellState.flagged) {
+        return cells;
+    }
+
     const {
         topLeftCell,
         topCell,

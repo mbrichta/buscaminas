@@ -43,7 +43,6 @@ const App: React.FC = () => {
     }, [hasLost]);
 
     const handleCellClick = (rowParam: number, colParam: number) => (): void => {
-        console.log(rowParam, colParam);
         let newCells = cells.slice();
 
         //start the game
@@ -71,6 +70,7 @@ const App: React.FC = () => {
                 newCells[rowIndx][colIndx].state = CellState.visible;
             }))
             newCells[rowParam][colParam].red = true;
+            setHasLost(true);
             setGameOn(false);
             setFace(FaceEmoji.dead);
 
@@ -145,6 +145,21 @@ const App: React.FC = () => {
         }
     }
 
+    const showAllBombs = (): CellType[][] => {
+        const currentCells = cells.slice();
+        return currentCells.map(row =>
+            row.map(cell => {
+                if (cell.value === CellValue.bomb) {
+                    return {
+                        ...cell,
+                        state: CellState.visible
+                    };
+                }
+
+                return cell;
+            })
+        );
+    };
     const rightClickHandler = (rowParam: number, colParam: number) =>
         (e: React.MouseEvent<HTMLDivElement, MouseEvent>): void => {
             e.preventDefault();
@@ -167,8 +182,6 @@ const App: React.FC = () => {
                 currentCells[rowParam][colParam].state = CellState.open;
                 setBombCounter(bombCounter + 1);
             };
-            console.log(bombCounter)
-
         }
 
     return (
