@@ -41,7 +41,6 @@ export const generateCels = () => {
     // generate cells
     for (let rows = 0; rows < MAX_ROWS; rows++) {
         cells.push([]);
-
         for (let cols = 0; cols < MAX_COLUMNS; cols++) {
             cells[rows].push({
                 value: CellValue.none,

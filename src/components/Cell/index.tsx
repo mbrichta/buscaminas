@@ -9,11 +9,12 @@ interface CellProps {
     col: number,
     face: FaceEmoji,
     setFace: Function,
+    isRed: boolean | undefined;
     onClick(rowParam: number, colParam: number): (...args: any[]) => void;
     onRightClick(rowParam: number, colParam: number): (...args: any[]) => void;
 }
 
-const Cell: React.FC<CellProps> = ({ state, value, row, col, face, setFace, onClick, onRightClick }) => {
+const Cell: React.FC<CellProps> = ({ state, value, row, col, face, setFace, isRed, onClick, onRightClick }) => {
 
     const renderContent = (): React.ReactNode => {
         if (state === CellState.visible) {
@@ -41,7 +42,7 @@ const Cell: React.FC<CellProps> = ({ state, value, row, col, face, setFace, onCl
 
     return (
         <div
-            className={`cell ${state === CellState.visible ? 'visible' : ''} value-${value}`}
+            className={`cell ${state === CellState.visible ? 'visible' : ''} value-${value} ${isRed ? 'red' : null}`}
             onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
             onClick={onClick(row, col)}

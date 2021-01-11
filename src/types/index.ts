@@ -4,6 +4,7 @@ export enum CellValue {
     two,
     three,
     four,
+    five,
     six,
     seven,
     eight,
@@ -18,7 +19,8 @@ export enum CellState {
 
 export type CellType = {
     value: CellValue;
-    state: CellState
+    state: CellState;
+    red?: boolean | undefined;
 };
 
 export enum FaceEmoji {
